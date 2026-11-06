@@ -22,6 +22,9 @@ class WaitlistIn(BaseModel):
 
     email: EmailStr
     source: Literal["home", "pricing", "waitlist", "footer"] = "waitlist"
+    # Optional extras. Both are self-reported labels, never used for access decisions.
+    role: Literal["student", "business_owner", "freelancer", "professional", "organisation", "other"] | None = None
+    interest: str | None = Field(default=None, pattern=r"^[a-z0-9-]{1,40}$")  # a solution slug or "other"
     website: str | None = Field(default=None, max_length=200)  # honeypot
 
 
@@ -39,12 +42,18 @@ def join(payload: WaitlistIn, db: Session = Depends(get_db)):
         return WaitlistOut(message=_THANKS)
     email = payload.email.lower()
     # Same response whether or not the email already exists (no email enumeration).
-    if db.scalar(select(WaitlistSignup.id).where(WaitlistSignup.email == email)) is None:
+    existing = db.scalar(select(WaitlistSignup).where(WaitlistSignup.email == email))
+    if existing is None:
         try:
-            db.add(WaitlistSignup(email=email, source=payload.source))
+            db.add(WaitlistSignup(email=email, source=payload.source, role=payload.role, interest=payload.interest))
             db.commit()
         except IntegrityError:  # concurrent duplicate
             db.rollback()
+    elif payload.role or payload.interest:
+        # Returning signup adds detail: fill it in, never blank anything out.
+        existing.role = payload.role or existing.role
+        existing.interest = payload.interest or existing.interest
+        db.commit()
     return WaitlistOut(message=_THANKS)
 
 

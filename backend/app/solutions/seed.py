@@ -74,7 +74,7 @@ STARTERS = [
         description="Create a clear, professional invoice from a few details.",
         problem_solved="Building invoices by hand in spreadsheets is error-prone and looks unprofessional.",
         target_audience="Freelancers and small businesses",
-        plan="pro", status="preview", is_featured=False, output_type="document",
+        plan="free", status="preview", is_featured=False, output_type="document",
         output_description="A formatted invoice with line items and totals, ready to send.",
         input_fields=[
             f("client_name", "Client name", max_length=100),

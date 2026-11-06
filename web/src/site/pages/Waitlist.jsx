@@ -9,10 +9,11 @@ export default function Waitlist() {
         intro="Accounts, the free trial and Pro aren't open yet. Leave your email and we'll tell you the day they are.">
         <div className="card card--glow narrow wl__card">
           <WaitlistCount />
-          <WaitlistForm source="waitlist" />
+          <WaitlistForm source="waitlist" detailed />
           <ul className="ticks">
             <li>One email when sign-up opens</li>
-            <li>We only use your email for that. Ask us any time and we'll remove it.</li>
+            <li>The two optional questions only help us decide what to build first.</li>
+            <li>We only use your details for that. Ask us any time and we'll remove them.</li>
           </ul>
         </div>
       </Section>

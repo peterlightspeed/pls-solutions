@@ -13,6 +13,9 @@ class WaitlistSignup(Base):
     id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
     email: Mapped[str] = mapped_column(String(254), unique=True, index=True)  # stored lowercase
     source: Mapped[str] = mapped_column(String(24), default="waitlist")
+    # Optional, self-reported. Added so early users can be segmented; see migrations/001.
+    role: Mapped[str | None] = mapped_column(String(24), nullable=True)
+    interest: Mapped[str | None] = mapped_column(String(40), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )

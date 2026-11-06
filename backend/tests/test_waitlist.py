@@ -70,3 +70,23 @@ def test_rate_limited(ctx):
     client, _ = ctx
     codes = [client.post("/waitlist", json={"email": f"u{i}@example.com"}).status_code for i in range(11)]
     assert codes[-1] == 429
+
+
+def test_optional_role_and_interest_saved_and_filled_later(ctx):
+    client, Session = ctx
+    assert client.post("/waitlist", json={"email": "b@example.com"}).status_code == 201
+    r = client.post("/waitlist", json={"email": "B@example.com", "role": "freelancer", "interest": "invoice-generator"})
+    assert r.status_code == 201
+    with Session() as db:
+        rows = db.query(WaitlistSignup).all()
+        assert len(rows) == 1 and rows[0].role == "freelancer" and rows[0].interest == "invoice-generator"
+    # a later bare signup must not erase what we already know
+    client.post("/waitlist", json={"email": "b@example.com"})
+    with Session() as db:
+        assert db.query(WaitlistSignup).one().role == "freelancer"
+
+
+def test_role_and_interest_are_validated(ctx):
+    client, _ = ctx
+    assert client.post("/waitlist", json={"email": "c@example.com", "role": "wizard"}).status_code == 422
+    assert client.post("/waitlist", json={"email": "c@example.com", "interest": "<script>"}).status_code == 422

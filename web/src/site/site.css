@@ -288,3 +288,6 @@ body{background:radial-gradient(80% 40% at 50% -5%,rgba(139,108,246,.16),transpa
 
 /* call to action glow */
 .cta{position:relative;overflow:hidden;border:1px solid transparent;background:radial-gradient(60% 120% at 50% 0%,rgba(139,108,246,.34),transparent),radial-gradient(45% 90% at 12% 100%,rgba(47,212,232,.22),transparent),radial-gradient(40% 80% at 95% 100%,rgba(236,72,153,.16),transparent),linear-gradient(var(--panel),var(--panel)) padding-box,var(--edge) border-box}
+.wl select{flex:1 1 100%;font:inherit;color:var(--ink);background:rgba(255,255,255,.06);border:1.5px solid var(--line);border-radius:999px;padding:11px 18px}
+.wl select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(47,212,232,.15)}
+.wl select option{background:#0b1124;color:#eef1fb}

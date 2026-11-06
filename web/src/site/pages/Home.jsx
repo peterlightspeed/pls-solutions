@@ -49,7 +49,8 @@ function FeaturedSolutions() {
       intro="Ready-made tools for everyday business problems. Find one by name, or by the problem you want solved.">
       <div className="sol-grid">{items.map((s) => <SolutionCard key={s.id} solution={s} />)}</div>
       <div className="center">
-        <Link className="btn btn--primary" to="/solutions">Browse all solutions</Link>
+        <Link className="btn btn--primary" to="/app">Open Workspace</Link>
+        <Link className="btn btn--ghost" to="/solutions">Browse all solutions</Link>
         <Link className="btn btn--ghost" to="/solutions/request">Request a solution</Link>
       </div>
     </Section>

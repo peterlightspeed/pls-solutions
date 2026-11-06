@@ -8,7 +8,7 @@ export const COMPANY = {
   blurb:
     "We build AI tools and custom software that take the repetitive work off your plate, so you can spend your time on the parts of your business only you can do.",
   location: "Lagos, Nigeria",
-  contactEmail: "", // TODO: add your business email; the footer shows it only when set
+  contactEmail: "plstechcompany@gmail.com", // shown in the footer when set
   github: "https://github.com/peterlightspeed",
 };
 
@@ -23,6 +23,7 @@ export const FOUNDER = {
 export const NAV = [
   { to: "/", label: "Home" },
   { to: "/solutions", label: "Solutions" },
+  { to: "/app", label: "Workspace" },
   { to: "/services", label: "Services" },
   { to: "/products", label: "Products" },
   { to: "/pricing", label: "Pricing" },

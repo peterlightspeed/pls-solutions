@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
@@ -17,10 +17,23 @@ import Services from "./site/pages/Services";
 import Waitlist from "./site/pages/Waitlist";
 import "./site/site.css"; // must come after the features' CSS
 
+import {
+  CategoryPage, ExploreSolutions, SolutionPage, ToolPage, WorkspaceHome, WorkspaceLayout,
+} from "./workspace/lazyPages";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
+      <Suspense fallback={<p style={{ padding: 24 }} role="status">Loading…</p>}>
       <Routes>
+        <Route path="app" element={<WorkspaceLayout />}>
+          <Route index element={<WorkspaceHome />} />
+          <Route path="solutions" element={<ExploreSolutions />} />
+          <Route path="solutions/:slug" element={<SolutionPage />} />
+          <Route path="tools/:slug" element={<ToolPage />} />
+          <Route path="category/:category" element={<CategoryPage />} />
+          <Route path="*" element={<WorkspaceHome />} />
+        </Route>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="solutions" element={<SolutionsLibraryPage />} />
@@ -40,6 +53,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      </Suspense>
     </BrowserRouter>
   </React.StrictMode>
 );
