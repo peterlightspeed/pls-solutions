@@ -1,17 +1,45 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
-  SolutionsLibraryPage, SolutionDetailPage, RequestSolutionPage,
+  RequestSolutionPage, SolutionDetailPage, SolutionsLibraryPage,
 } from "./features/solutions";
+import Layout from "./site/Layout";
+import About from "./site/pages/About";
+import Contact from "./site/pages/Contact";
+import Faq from "./site/pages/Faq";
+import Home from "./site/pages/Home";
+import Legal from "./site/pages/Legal";
+import NotFound from "./site/pages/NotFound";
+import Pricing from "./site/pages/Pricing";
+import Products from "./site/pages/Products";
+import Services from "./site/pages/Services";
+import Waitlist from "./site/pages/Waitlist";
+import "./site/site.css"; // must come after the features' CSS
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Navigate to="/solutions" replace />} />
-      <Route path="/solutions" element={<SolutionsLibraryPage />} />
-      <Route path="/solutions/request" element={<RequestSolutionPage />} />
-      <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
-    </Routes>
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="solutions" element={<SolutionsLibraryPage />} />
+          <Route path="solutions/request" element={<RequestSolutionPage />} />
+          <Route path="solutions/:slug" element={<SolutionDetailPage />} />
+          <Route path="services" element={<Services />} />
+          <Route path="products" element={<Products />} />
+          <Route path="pricing" element={<Pricing />} />
+          <Route path="waitlist" element={<Waitlist />} />
+          <Route path="about" element={<About />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="terms" element={<Legal doc="terms" />} />
+          <Route path="privacy" element={<Legal doc="privacy" />} />
+          <Route path="refunds" element={<Legal doc="refunds" />} />
+          <Route path="cookies" element={<Legal doc="cookies" />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
 );

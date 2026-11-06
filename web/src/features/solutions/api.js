@@ -1,7 +1,7 @@
 // API base. Vite: VITE_API_URL. TODO: adapt if the project uses Next.js env vars.
 const BASE = (import.meta.env && import.meta.env.VITE_API_URL) || "/api";
 
-async function request(path, options = {}) {
+export async function request(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
     credentials: "include", // cookie sessions; adjust if auth uses bearer tokens
     headers: { "Content-Type": "application/json" },
