@@ -50,6 +50,7 @@ export default function SolutionDetailPage() {
   return (
     <main className="sol-page sol-detail">
       <Link to="/solutions" className="sol-back">← All solutions</Link>
+      <img className="sol-banner" src={`/img/solutions/${s.slug}.svg`} alt="" onError={(e) => { e.currentTarget.style.display = "none"; }} />
       <header>
         <div className="sol-card__top">
           <span className="sol-card__cat">{s.category_label}</span>

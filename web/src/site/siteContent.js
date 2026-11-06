@@ -32,25 +32,25 @@ export const NAV = [
 
 export const SERVICES = [
   {
-    icon: "sparkles",
+    icon: "sparkles", img: "/img/services/ai.svg",
     title: "AI Solutions & Automation",
     text: "Custom AI tools that take over repetitive work: replies, documents, reports and follow-ups.",
     points: ["AI assistants for your workflows", "Document and message automation", "Integration with the tools you already use"],
   },
   {
-    icon: "code",
+    icon: "code", img: "/img/services/software.svg",
     title: "Custom Software Development",
     text: "Web apps, APIs and internal tools built around how your business actually runs.",
     points: ["Backend APIs and databases", "Web dashboards and portals", "Secure, maintainable code"],
   },
   {
-    icon: "workflow",
+    icon: "workflow", img: "/img/services/workflow.svg",
     title: "Business Workflow Automation",
     text: "Map a manual process, then turn it into a reliable automated one.",
     points: ["Process review and design", "Approvals, notifications, reporting", "Fewer errors, faster turnaround"],
   },
   {
-    icon: "compass",
+    icon: "compass", img: "/img/services/consult.svg",
     title: "AI Strategy & Consultation",
     text: "Not sure where AI fits? We help you find the use cases worth building first.",
     points: ["Opportunity assessment", "Build-vs-buy guidance", "A practical roadmap"],
@@ -60,19 +60,19 @@ export const SERVICES = [
 // status: "live" | "development"  (TODO: confirm the status of each product)
 export const PRODUCTS = [
   {
-    name: "PLS Jarvis",
+    name: "PLS Jarvis", img: "/img/products/jarvis.svg",
     status: "live",
     text: "An AI assistant from the PLS Tech ecosystem.",
     url: "https://pls-jarvis.vercel.app",
   },
   {
-    name: "PLS Business AI Assistant",
+    name: "PLS Business AI Assistant", img: "/img/products/assistant.svg",
     status: "development",
     text: "An AI assistant focused on everyday business tasks.",
     url: "",
   },
   {
-    name: "PLS Nexus",
+    name: "PLS Nexus", img: "/img/products/nexus.svg",
     status: "development",
     text: "Part of the PLS Tech ecosystem. Details coming soon.",
     url: "",
@@ -152,7 +152,7 @@ export const WAITLIST_MIN_TO_SHOW = 10;
 
 export const STACK = {
   core: ["Python", "FastAPI", "PostgreSQL", "React", "JavaScript"],
-  roadmap: ["Paystack payments", "Redis", "Docker", "Cloudflare"],
+  roadmap: ["Paystack", "Redis", "Docker", "Cloudflare"],
 };
 
 // TODO: add real partners here ({ name, url, logo }). Nothing is shown as a partner until you do.

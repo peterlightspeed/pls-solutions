@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Icon from "../components/Icons";
+import MediaCard from "../components/MediaCard";
 import Section from "../components/Section";
 import { SERVICES } from "../siteContent";
 
@@ -10,12 +11,9 @@ export default function Services() {
         intro="Services are custom work we do with you. Looking for a ready-made tool instead? Browse the solutions library.">
         <div className="cards cards--2">
           {SERVICES.map((s) => (
-            <article className="card" key={s.title}>
-              <span className="icon" aria-hidden="true"><Icon name={s.icon} /></span>
-              <h3>{s.title}</h3>
-              <p className="muted">{s.text}</p>
+            <MediaCard key={s.title} img={s.img} icon={<Icon name={s.icon} />} title={s.title} text={s.text}>
               <ul className="ticks">{s.points.map((p) => <li key={p}>{p}</li>)}</ul>
-            </article>
+            </MediaCard>
           ))}
         </div>
         <div className="center">

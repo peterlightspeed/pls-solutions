@@ -5,11 +5,14 @@ import SolutionCard from "../../features/solutions/components/SolutionCard";
 import "../../features/solutions/solutions.css";
 import FaqList from "../components/FaqList";
 import Founder from "../components/Founder";
+import HeroVideo from "../components/HeroVideo";
 import Icon from "../components/Icons";
+import MediaCard from "../components/MediaCard";
 import Section from "../components/Section";
+import Stats from "../components/Stats";
+import TechTile from "../components/TechTile";
 import WaitlistCount from "../components/WaitlistCount";
 import WaitlistForm from "../components/WaitlistForm";
-import HeroVideo from "../components/HeroVideo";
 import { PARTNERS, PRODUCTS, PROBLEMS, SERVICES, STACK, STEPS, WHY } from "../siteContent";
 
 const IDEAS = ["Reply to customers", "Write a CV", "Send invoices", "Follow up with leads"];
@@ -57,6 +60,7 @@ export default function Home() {
   return (
     <main>
       <section className="hero">
+        <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
         <div className="wrap hero__grid">
           <div className="hero__text">
             <span className="eyebrow">Helping businesses work smarter with AI</span>
@@ -72,23 +76,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="status">
-        <div className="wrap status__in">
-          <span><i className="dot dot--live" /> Live now: solutions library, requests, contact, waitlist</span>
-          <span><i className="dot dot--soon" /> Coming: accounts, free trial, Pro plans</span>
+      <section className="statsband">
+        <div className="wrap">
+          <Stats />
+          <div className="status__in">
+            <span><i className="dot dot--live" /> Live now: solutions library, requests, contact, waitlist</span>
+            <span><i className="dot dot--soon" /> Coming: accounts, free trial, Pro plans</span>
+          </div>
         </div>
       </section>
 
       <Section eyebrow="Everyday problems" title="What's slowing you down?"
         intro="Pick the problem you recognise. Each one links to a solution you can look at.">
-        <div className="cards">
-          {PROBLEMS.map((p) => (
-            <Link className="card card--link" to={`/solutions/${p.slug}`} key={p.slug}>
-              <span className="icon"><Icon name={p.icon} /></span>
-              <h3>{p.problem}</h3>
-              <p className="muted">{p.text}</p>
-              <span className="card__go">{p.solution} →</span>
-            </Link>
+        <div className="cards cards--3">
+          {PROBLEMS.slice(0, 6).map((p) => (
+            <MediaCard key={p.slug} to={`/solutions/${p.slug}`} img={`/img/solutions/${p.slug}.svg`}
+              icon={<Icon name={p.icon} />} title={p.problem} text={p.text} cta={p.solution} />
           ))}
         </div>
         <div className="center">
@@ -115,43 +118,28 @@ export default function Home() {
         intro="When a ready-made tool isn't enough, we design and build around how your business really runs.">
         <div className="cards">
           {SERVICES.map((s) => (
-            <article className="card" key={s.title}>
-              <span className="icon"><Icon name={s.icon} /></span>
-              <h3>{s.title}</h3>
-              <p className="muted">{s.text}</p>
-            </article>
+            <MediaCard key={s.title} to="/services" img={s.img} icon={<Icon name={s.icon} />}
+              title={s.title} text={s.text} cta="View details" />
           ))}
         </div>
-        <div className="center"><Link className="btn btn--ghost" to="/services">All services →</Link></div>
       </Section>
 
       <Section eyebrow="Ecosystem" title="Products">
         <div className="cards cards--3">
           {PRODUCTS.map((p) => (
-            <article className="card" key={p.name}>
-              <span className={`pill pill--${p.status}`}>{p.status === "live" ? "Live" : "In development"}</span>
-              <h3>{p.name}</h3>
-              <p className="muted">{p.text}</p>
-              {p.url && <a href={p.url} target="_blank" rel="noreferrer">Open →</a>}
-            </article>
+            <MediaCard key={p.name} img={p.img} title={p.name} text={p.text}
+              badge={<span className={`pill pill--${p.status}`}>{p.status === "live" ? "Live" : "In development"}</span>}
+              {...(p.url ? { href: p.url, cta: "Open" } : { to: "/waitlist", cta: "Join the waitlist" })} />
           ))}
         </div>
       </Section>
 
       <Section eyebrow="Technology" alt title="What we build with"
         intro="Proven tools, chosen for reliability and security.">
-        <div className="stack">
-          <div className="card">
-            <span className="icon"><Icon name="layers" /></span>
-            <h3>Core stack</h3>
-            <div className="tags">{STACK.core.map((t) => <span className="tag" key={t}>{t}</span>)}</div>
-          </div>
-          <div className="card">
-            <span className="icon"><Icon name="compass" /></span>
-            <h3>On the roadmap</h3>
-            <div className="tags">{STACK.roadmap.map((t) => <span className="tag tag--soon" key={t}>{t}</span>)}</div>
-          </div>
-        </div>
+        <p className="tgroup">Core stack</p>
+        <div className="ttiles">{STACK.core.map((t) => <TechTile key={t} name={t} />)}</div>
+        <p className="tgroup tgroup--gap">On the roadmap</p>
+        <div className="ttiles">{STACK.roadmap.map((t) => <TechTile key={t} name={t} planned />)}</div>
       </Section>
 
       <Section eyebrow="Why PLS Tech" title="Software you can trust with real work">
