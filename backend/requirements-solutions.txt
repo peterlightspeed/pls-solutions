@@ -6,3 +6,4 @@ psycopg[binary]>=3.1   # PostgreSQL driver
 # dev
 pytest
 httpx
+uvicorn>=0.30
