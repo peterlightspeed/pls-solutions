@@ -1,5 +1,7 @@
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import { STATUS, accessText, toolRoute } from "../catalog";
+import { STAGES } from "../modules/descriptors";
+import { ErrorState, LoadingState } from "../components/StateViews";
 import { PlanBadge, StatusBadge } from "../components/StatusBadge";
 import Icon from "../Icon";
 import { useDetail } from "../useCatalog";
@@ -32,8 +34,8 @@ export default function SolutionPage() {
           <h1>{item.name}</h1>
           <p className="ws-lead">{item.fullDescription}</p>
 
-          {detailLoading && <p className="ws-muted" role="status">Loading details…</p>}
-          {detailError && <p className="ws-notice ws-notice--warn" role="alert">Extra details could not be loaded.</p>}
+          {detailLoading && <LoadingState label="Loading details…" />}
+          {detailError && <ErrorState error={detailError} inline />}
           {detail && (
             <>
               <h2>The problem it solves</h2><p>{detail.problem_solved}</p>
@@ -55,6 +57,15 @@ export default function SolutionPage() {
           <p><strong>{STATUS[item.status].label}.</strong> {STATUS[item.status].note}</p>
           <h2>Access</h2>
           <p>{accessText(item)}</p>
+          <h2>Module details</h2>
+          <dl className="ws-facts">
+            <dt>Build stage</dt><dd>{item.descriptor.stage ? STAGES[item.descriptor.stage] : "Not verified"}</dd>
+            <dt>Sign-in to use</dt><dd>{item.descriptor.requiresAuth === null ? "Set on its own site" : item.descriptor.requiresAuth ? "Yes" : "No"}</dd>
+            <dt>AI help</dt><dd>{item.descriptor.aiCapability === "available" ? "Available" : item.descriptor.aiCapability === "planned" ? "Planned, not available yet" : "None"}</dd>
+            <dt>Enterprise</dt><dd>{{ undecided: "Not decided yet", not_planned: "Not planned", planned: "Planned", available: "Available" }[item.descriptor.enterprise]}</dd>
+            <dt>Saves as</dt><dd>{item.descriptor.fileTypes.output.length ? item.descriptor.fileTypes.output.join(", ") : "None"}</dd>
+            {item.tags.length > 0 && (<><dt>Tags</dt><dd>{item.tags.join(", ")}</dd></>)}
+          </dl>
           <div className="ws-stack">
             {item.externalUrl && (
               <a className="ws-btn ws-btn--primary" href={item.externalUrl} target="_blank" rel="noopener noreferrer">

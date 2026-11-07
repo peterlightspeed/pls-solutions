@@ -5,6 +5,7 @@ import { StatusBadge } from "../components/StatusBadge";
 import Icon from "../Icon";
 import { TOOLS } from "../tools/registry";
 import { useDetail } from "../useCatalog";
+import { LoadingState } from "../components/StateViews";
 import { NotFoundCard } from "./SolutionPage";
 
 // /app/tools/:slug. A real tool component from the registry is rendered when one exists.
@@ -23,7 +24,7 @@ export default function ToolPage() {
       <Link to={detailRoute(item)} className="ws-back"><Icon name="back" size={16} /> {item.name}</Link>
       <h1>{item.name}</h1>
       {Tool ? (
-        <Suspense fallback={<p className="ws-muted" role="status">Loading tool…</p>}><Tool item={item} /></Suspense>
+        <Suspense fallback={<LoadingState label="Loading tool…" />}><Tool item={item} /></Suspense>
       ) : (
         <div className="ws-card">
           <p><StatusBadge status={item.status} /></p>

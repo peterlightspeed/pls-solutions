@@ -1,3 +1,4 @@
+import ThemeToggle from "../ThemeToggle";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { COMPANY, FOUNDER, NAV } from "./siteContent";
@@ -32,6 +33,7 @@ function Header() {
               {n.label}
             </NavLink>
           ))}
+          <ThemeToggle />
           <Link className="btn btn--primary nav__cta" to="/waitlist">
             Join the waitlist
           </Link>

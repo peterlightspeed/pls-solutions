@@ -3,6 +3,7 @@
 //   2. Products from site/siteContent.js      -> source: "static"
 // Nothing here invents features: only fields that already exist are used.
 import { PRODUCTS } from "../site/siteContent";
+import { getModuleDescriptor } from "./modules/descriptors";
 
 // Flip to true once POST /solutions/{slug}/try really runs tools (see backend router.py, currently 501).
 // Until then no database solution is shown as Available or Beta.
@@ -46,6 +47,7 @@ function fromProduct(p) {
     externalUrl: p.url || "",
     tags: ["ai", "assistant"],
     features: [],
+    descriptor: getModuleDescriptor(slug),
   };
 }
 
@@ -73,6 +75,7 @@ export function normalizeApi(s) {
     externalUrl: "",
     tags: s.tags || [],
     features: [],
+    descriptor: getModuleDescriptor(s.slug),
   };
 }
 

@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import ThemeToggle from "../ThemeToggle";
+import { usePermissions } from "./access/permissions";
 import { categoriesOf } from "./catalog";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Icon from "./Icon";
+import AIHelpPanel from "./intelligence/AIHelpPanel";
+import { buildContext } from "./intelligence/buildContext";
+import { useContextSnapshot } from "./intelligence/useWorkspaceContext";
 import { registerServiceWorker } from "./registerSW";
 import { useCatalog } from "./useCatalog";
 import "./workspace.css";
@@ -20,6 +26,8 @@ function SideNav({ categories, collapsed, onNavigate }) {
       {link("/app/solutions", "grid", "Explore Solutions")}
       <p className="ws-nav__group">Solution categories</p>
       {categories.map((c) => link(`/app/category/${c.value}`, "folder", `${c.label} (${c.count})`))}
+      <p className="ws-nav__group">Developers</p>
+      {link("/app/integrations", "grid", "Integrations (planned)")}
       <p className="ws-nav__group">Account</p>
       <Link className="ws-nav__link" to="/contact" onClick={onNavigate} title={collapsed ? "Help & Support" : undefined}>
         <Icon name="help" /><span className="ws-nav__label">Help &amp; Support</span>
@@ -32,20 +40,32 @@ export default function WorkspaceLayout() {
   const catalog = useCatalog();
   const [collapsed, setCollapsed] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
   const [q, setQ] = useState("");
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const mainRef = useRef(null);
+  const helpBtn = useRef(null);
+  const helpHeading = useRef(null);
   const categories = categoriesOf(catalog.items);
+
+  const { principal, can } = usePermissions();
+  const snapshot = useContextSnapshot();
+  const context = buildContext({ pathname, items: catalog.items, snapshot, principal, can });
 
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   useEffect(() => { registerServiceWorker(); }, []);
   useEffect(() => {
-    if (!drawer) return undefined;
-    const onKey = (e) => e.key === "Escape" && setDrawer(false);
+    if (!drawer && !helpOpen) return undefined;
+    const onKey = (e) => {
+      if (e.key !== "Escape") return;
+      if (helpOpen) { setHelpOpen(false); helpBtn.current?.focus(); } else setDrawer(false);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [drawer]);
+  }, [drawer, helpOpen]);
+  useEffect(() => { if (helpOpen) helpHeading.current?.focus(); }, [helpOpen]);
+
+  const closeHelp = () => { setHelpOpen(false); helpBtn.current?.focus(); };
 
   const submit = (e) => {
     e.preventDefault();
@@ -55,14 +75,14 @@ export default function WorkspaceLayout() {
   };
 
   return (
-    <div className={`ws ${collapsed ? "ws--collapsed" : ""}`}>
+    <div className={`ws ${collapsed ? "ws--collapsed" : ""} ${helpOpen ? "ws--help" : ""}`}>
       <a className="ws-skip" href="#ws-main">Skip to content</a>
       <header className="ws-top">
         <button className="ws-iconbtn ws-top__menu" aria-label="Open navigation" aria-expanded={drawer}
           onClick={() => setDrawer(true)}><Icon name="menu" /></button>
         <button className="ws-iconbtn ws-top__collapse" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-pressed={collapsed} onClick={() => setCollapsed((c) => !c)}><Icon name="menu" /></button>
-        <Link to="/app" className="ws-brand">
+        <Link to="/app" className="ws-brand" aria-label="PLS Workspace home">
           <img src="/logo.jpeg" alt="" width="32" height="32" /><span>PLS Workspace</span>
         </Link>
         <form className="ws-search" role="search" onSubmit={submit}>
@@ -70,7 +90,12 @@ export default function WorkspaceLayout() {
           <input type="search" value={q} onChange={(e) => setQ(e.target.value)} maxLength={100}
             placeholder="Search solutions" aria-label="Search solutions" />
         </form>
+        <button ref={helpBtn} type="button" className="ws-btn ws-top__help" aria-label="Page help" aria-expanded={helpOpen}
+          aria-controls="ws-help-panel" onClick={() => setHelpOpen((o) => !o)}>
+          <Icon name="help" size={18} /> <span>Page help</span>
+        </button>
         <Link to="/" className="ws-top__site">Company website</Link>
+        <ThemeToggle />
         <span className="ws-top__guest" title="Accounts are not available yet">Guest</span>
       </header>
 
@@ -90,9 +115,17 @@ export default function WorkspaceLayout() {
         </div>
       )}
 
-      <main id="ws-main" className="ws-main" ref={mainRef} tabIndex={-1}>
-        <Outlet context={{ catalog }} />
+      <main id="ws-main" className="ws-main" tabIndex={-1}>
+        <ErrorBoundary key={pathname}>
+          <Outlet context={{ catalog }} />
+        </ErrorBoundary>
       </main>
+
+      {helpOpen && (
+        <div id="ws-help-panel" className="ws-help-wrap">
+          <AIHelpPanel ref={helpHeading} context={context} onClose={closeHelp} />
+        </div>
+      )}
     </div>
   );
 }

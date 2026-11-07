@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { recordActivity } from "../../intelligence/contextStore";
+import { usePublishContext } from "../../intelligence/useWorkspaceContext";
 import "./invoice.css";
 
 // Runs entirely in the browser: nothing typed here is sent to any server or stored.
@@ -36,6 +38,13 @@ export default function InvoiceGenerator() {
   if (!f.toName.trim()) problems.push("Enter the client name.");
   if (!filled.length) problems.push("Add at least one item with a description and a price above zero.");
   if (f.due && f.due < f.issued) problems.push("The due date cannot be before the issue date.");
+
+  // Context for Page help / a future assistant: labels and counts only, never what the person typed.
+  usePublishContext("module:invoice-generator", {
+    action: shown && problems.length ? "fixing_validation_errors" : filled.length ? "editing_invoice" : "starting_invoice",
+    selection: { kind: "invoice", label: `${filled.length} item${filled.length === 1 ? "" : "s"}` },
+    availableActions: [{ label: "Save as PDF / Print" }],
+  });
 
   return (
     <div className="inv">
@@ -88,7 +97,12 @@ export default function InvoiceGenerator() {
         )}
         <div className="ws-row inv__wide">
           <button type="button" className="ws-btn ws-btn--primary"
-            onClick={() => { setShown(true); if (!problems.length) window.print(); }}>
+            onClick={() => {
+              setShown(true);
+              if (problems.length) { recordActivity("invoice-generator", "validation_failed"); return; }
+              recordActivity("invoice-generator", "pdf_requested");
+              window.print();
+            }}>
             Save as PDF / Print
           </button>
           <span className="ws-muted">In the print window, choose “Save as PDF”.</span>

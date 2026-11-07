@@ -6,7 +6,7 @@
 .ws-skip:focus{left:8px}
 .ws-muted{color:var(--muted)}
 .ws-lead{font-size:1.08rem;color:var(--muted);max-width:640px}
-.ws-link{background:none;border:0;padding:0;color:var(--cyan);font:inherit;text-decoration:underline;cursor:pointer}
+.ws-link{display:inline-flex;align-items:center;min-height:40px;min-width:40px;background:none;border:0;padding:0 6px;color:var(--cyan);font:inherit;text-decoration:underline;cursor:pointer}
 
 /* top bar */
 .ws-top{position:sticky;top:0;z-index:40;height:60px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--bg2);border-bottom:1px solid var(--line)}
@@ -101,3 +101,26 @@
   .ws-brand span{display:none}
 }
 @media (prefers-reduced-motion:reduce){.ws *{transition:none!important}}
+
+/* ---- page help panel, facts list, state views, connectors ---- */
+.ws-top__help{min-height:40px;padding:0 14px;font-size:.9rem}
+.ws-help-wrap{position:fixed;top:60px;right:0;bottom:0;width:min(380px,100vw);z-index:45;background:var(--bg2);border-left:1px solid var(--line);overflow-y:auto;box-shadow:-8px 0 24px rgba(0,0,0,.18)}
+.ws-help{padding:16px 20px 32px}
+.ws-help__head{display:flex;justify-content:space-between;align-items:center}
+.ws-help__head h2{margin:0;font-size:1.25rem;outline:none}
+.ws-help h3{font-size:.95rem;margin:1.2em 0 .3em;font-family:var(--sans)}
+.ws-help ul{padding-left:1.1em;margin:.3em 0}
+.ws-help li{margin:.25em 0}
+.ws-help__ctx{margin-top:1.2em}
+.ws-help__ctx summary{cursor:pointer;font-weight:600}
+.ws-facts{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:10px 0}
+.ws-facts dt{color:var(--muted)}
+.ws-facts dd{margin:0}
+.ws-connectors{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.ws-connector{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.ws-connector p{margin:.3em 0;color:var(--muted)}
+.ws-connector ul{margin:.3em 0;padding-left:1.1em;font-size:.9rem}
+.ws-empty h3{margin:0 0 .3em;font-size:1.05rem}
+.ws-errorstate{margin:14px 0}
+@media (min-width:1200px){.ws--help .ws-main{margin-right:380px}}
+@media (max-width:900px){.ws-top__help span{display:none}.ws-help-wrap{top:60px}}

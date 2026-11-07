@@ -1,17 +1,17 @@
+import { memo } from "react";
+import { Link } from "react-router-dom";
+import { EmptyState, ErrorState, LoadingState } from "./StateViews";
 import SolutionTile from "./SolutionTile";
 
-// Shared by Home, Explore and Category pages: handles loading, error and empty states in one place.
-export default function SolutionGrid({ items, loading, error, retry, empty = "No solutions match." }) {
+// Shared by Home, Explore and Category pages: loading, error and empty states live in one place.
+function SolutionGrid({ items, loading, error, retry, empty = "No solutions match." }) {
   return (
     <>
-      {error && (
-        <div className="ws-notice ws-notice--warn" role="alert">
-          Some solutions could not be loaded ({error}).{" "}
-          <button className="ws-link" onClick={retry}>Try again</button>
-        </div>
+      {error && <ErrorState error={error} onRetry={retry} />}
+      {loading && <LoadingState label="Loading solutions…" />}
+      {!loading && items.length === 0 && (
+        <EmptyState action={<Link className="ws-btn" to="/app/solutions">Explore all solutions</Link>}>{empty}</EmptyState>
       )}
-      {loading && <p className="ws-muted" role="status">Loading solutions…</p>}
-      {!loading && items.length === 0 && <p className="ws-empty">{empty}</p>}
       {items.length > 0 && (
         <div className="ws-grid">
           {items.map((it) => <SolutionTile key={it.slug} item={it} />)}
@@ -20,3 +20,5 @@ export default function SolutionGrid({ items, loading, error, retry, empty = "No
     </>
   );
 }
+
+export default memo(SolutionGrid);

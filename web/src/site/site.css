@@ -182,7 +182,7 @@ img{max-width:100%}
 .sol-card__title{font-family:var(--serif);font-size:1.2rem}
 .sol-card__cat{color:var(--cyan)}
 .sol-badge--free{color:var(--green);border-color:var(--green)}
-.sol-badge--pro{background:var(--violet);border-color:var(--violet);color:#fff}
+.sol-badge--pro{background:#6d4fe0;border-color:#6d4fe0;color:#fff}
 .sol-chip{border-radius:999px}
 .sol-chip.is-active{background:var(--cyan);border-color:var(--cyan);color:#04101f}
 .sol-btn{border-radius:999px;border:1.5px solid rgba(255,255,255,.28);color:var(--ink)}
@@ -291,3 +291,36 @@ body{background:radial-gradient(80% 40% at 50% -5%,rgba(139,108,246,.16),transpa
 .wl select{flex:1 1 100%;font:inherit;color:var(--ink);background:rgba(255,255,255,.06);border:1.5px solid var(--line);border-radius:999px;padding:11px 18px}
 .wl select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(47,212,232,.15)}
 .wl select option{background:#0b1124;color:#eef1fb}
+
+/* ---- light theme (opt-in via the toggle; dark stays the default) ---- */
+.theme-toggle{flex:none;display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);font-size:1.1rem;cursor:pointer}
+.theme-toggle:hover{border-color:var(--cyan)}
+:root[data-theme="light"]{color-scheme:light;
+  --bg:#f6f8fc;--bg2:#ffffff;--card:rgba(15,23,42,.04);--card-h:rgba(15,23,42,.08);
+  --ink:#0f172a;--muted:#475569;--line:rgba(15,23,42,.14);
+  --cyan:#0a7285;--cyan-d:#07616f;--violet:#5b3fd1;--pink:#be185d;--green:#047857;--amber:#92400e;
+  --grad:linear-gradient(90deg,#0b7f92,#5b3fd1 60%,#be185d)}
+:root[data-theme="light"] .hdr{background:rgba(255,255,255,.9)}
+:root[data-theme="light"] .mc__img .pill{background:rgba(255,255,255,.92)}
+:root[data-theme="light"] .btn,:root[data-theme="light"] .ws-btn{border-color:rgba(15,23,42,.3)}
+:root[data-theme="light"] .btn--primary,:root[data-theme="light"] .sol-btn--primary,:root[data-theme="light"] .nav .btn--primary,
+:root[data-theme="light"] .ws-btn--primary,:root[data-theme="light"] .ws .ws-btn--primary,:root[data-theme="light"] .ws-skip,
+:root[data-theme="light"] .sol-chip.is-active{color:#fff}
+:root[data-theme="light"] .btn--primary:hover,:root[data-theme="light"] .sol-btn--primary:hover,:root[data-theme="light"] .ws-btn--primary:hover{background:var(--cyan-d);border-color:var(--cyan-d);color:#fff}
+:root[data-theme="light"] .form select option,:root[data-theme="light"] .wl select option,:root[data-theme="light"] .sol-page select option,
+:root[data-theme="light"] .inv select option{background:#fff;color:#0f172a}
+:root[data-theme="light"] .sol-page{--bg:#f6f8fc;--fg:#0f172a;--muted:#475569;--line:rgba(15,23,42,.14);--soft:rgba(15,23,42,.04);--brand:#0a7285;--brand-fg:#fff;--err:#be123c;color:#0f172a}
+:root[data-theme="light"] .ws-badge--plan-free,:root[data-theme="light"] .ws-badge--plan-pro{color:var(--ink)}
+:root[data-theme="light"] .inv__sheet{border:1px solid var(--line)}
+:root[data-theme="light"]{--panel:#ffffff;--edge:linear-gradient(140deg,rgba(11,127,146,.45),rgba(15,23,42,.1) 40%,rgba(91,63,209,.4))}
+:root[data-theme="light"] body{background:radial-gradient(80% 40% at 50% -5%,rgba(91,63,209,.1),transparent 70%),var(--bg);background-repeat:no-repeat}
+:root[data-theme="light"] .stat{background:linear-gradient(rgba(255,255,255,.96),rgba(255,255,255,.96)) padding-box,var(--edge) border-box}
+:root[data-theme="light"] .sec__head h2{background:none;color:var(--ink)}
+:root[data-theme="light"] .vcard{background:rgba(255,255,255,.94)}
+:root[data-theme="light"] .mc__img{background:#e8eef7}
+:root[data-theme="light"] .hero::before{background-image:linear-gradient(rgba(15,23,42,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.05) 1px,transparent 1px)}
+:root[data-theme="light"] .form input,:root[data-theme="light"] .form textarea,:root[data-theme="light"] .form select,
+:root[data-theme="light"] .wl input,:root[data-theme="light"] .wl select{background:#fff;color:var(--ink);border-color:rgba(15,23,42,.25)}
+:root[data-theme="light"] .icon{box-shadow:none}
+.sol-page .sol-btn--primary,.sol-page .sol-btn--primary:hover{color:#04101f}
+:root[data-theme="light"] .sol-page .sol-btn--primary,:root[data-theme="light"] .sol-page .sol-btn--primary:hover{color:#fff}

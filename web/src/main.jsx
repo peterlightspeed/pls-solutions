@@ -15,11 +15,14 @@ import Pricing from "./site/pages/Pricing";
 import Products from "./site/pages/Products";
 import Services from "./site/pages/Services";
 import Waitlist from "./site/pages/Waitlist";
+import { watchSystemTheme } from "./theme";
 import "./site/site.css"; // must come after the features' CSS
 
 import {
-  CategoryPage, ExploreSolutions, SolutionPage, ToolPage, WorkspaceHome, WorkspaceLayout,
+  CategoryPage, ExploreSolutions, IntegrationsPage, SolutionPage, ToolPage, WorkspaceHome, WorkspaceLayout,
 } from "./workspace/lazyPages";
+
+watchSystemTheme();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -32,6 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="solutions/:slug" element={<SolutionPage />} />
           <Route path="tools/:slug" element={<ToolPage />} />
           <Route path="category/:category" element={<CategoryPage />} />
+          <Route path="integrations" element={<IntegrationsPage />} />
           <Route path="*" element={<WorkspaceHome />} />
         </Route>
         <Route element={<Layout />}>

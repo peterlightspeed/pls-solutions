@@ -14,7 +14,7 @@ export function useCatalog() {
       .then((page) => setRes({ attempt, apiItems: page.items.map(normalizeApi), error: null }))
       .catch((err) => {
         if (err.name === "AbortError") return;
-        setRes({ attempt, apiItems: [], error: err.message });
+        setRes({ attempt, apiItems: [], error: err });
       });
     return () => ctrl.abort();
   }, [attempt]);
@@ -34,7 +34,7 @@ export function useDetail(item) {
     let live = true;
     getSolution(slug)
       .then((data) => live && setRes({ slug, data, error: null }))
-      .catch((e) => live && setRes({ slug, data: null, error: e.message }));
+      .catch((e) => live && setRes({ slug, data: null, error: e }));
     return () => { live = false; };
   }, [slug]);
 

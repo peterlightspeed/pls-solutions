@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1736"/><stop offset="1" stop-color="#070b18"/></linearGradient>
+<radialGradient id="o1"><stop offset="0" stop-color="#2fd4e8" stop-opacity=".5"/><stop offset="1" stop-color="#2fd4e8" stop-opacity="0"/></radialGradient>
+<radialGradient id="o2"><stop offset="0" stop-color="#8b6cf6" stop-opacity=".5"/><stop offset="1" stop-color="#8b6cf6" stop-opacity="0"/></radialGradient>
+<linearGradient id="st" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="640" y2="360"><stop offset="0" stop-color="#2fd4e8"/><stop offset="1" stop-color="#8b6cf6"/></linearGradient>
+<pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern>
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="640" height="360" fill="url(#bg)"/>
+<rect width="640" height="360" fill="url(#grid)"/>
+<circle cx="175" cy="183" r="230" fill="url(#o1)"/>
+<circle cx="599" cy="279" r="210" fill="url(#o2)"/>
+<g filter="url(#glow)" stroke="url(#st)" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<rect x="110" y="62" width="270" height="84" rx="22" fill="#ffffff" fill-opacity=".05"/><path d="M136 146 L122 168 L162 146"/><line x1="138" y1="90" x2="352" y2="90" stroke-width="5" stroke-opacity=".6"/><line x1="138" y1="112" x2="292" y2="112" stroke-width="5" stroke-opacity=".6"/><rect x="270" y="192" width="270" height="84" rx="22" fill="#8b6cf6" fill-opacity=".16"/><path d="M514 276 L528 298 L488 276"/><line x1="298" y1="220" x2="512" y2="220" stroke-width="5" stroke-opacity=".6"/><line x1="298" y1="242" x2="452" y2="242" stroke-width="5" stroke-opacity=".6"/><path d="M470 236 l10 10 l20 -22" stroke-width="3.5"/>
+</g>
+</svg>

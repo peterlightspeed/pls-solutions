@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1736"/><stop offset="1" stop-color="#070b18"/></linearGradient>
+<radialGradient id="o1"><stop offset="0" stop-color="#2fd4e8" stop-opacity=".5"/><stop offset="1" stop-color="#2fd4e8" stop-opacity="0"/></radialGradient>
+<radialGradient id="o2"><stop offset="0" stop-color="#8b6cf6" stop-opacity=".5"/><stop offset="1" stop-color="#8b6cf6" stop-opacity="0"/></radialGradient>
+<linearGradient id="st" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="640" y2="360"><stop offset="0" stop-color="#2fd4e8"/><stop offset="1" stop-color="#8b6cf6"/></linearGradient>
+<pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".05"/></pattern>
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="640" height="360" fill="url(#bg)"/>
+<rect width="640" height="360" fill="url(#grid)"/>
+<circle cx="113" cy="42" r="230" fill="url(#o1)"/>
+<circle cx="533" cy="169" r="210" fill="url(#o2)"/>
+<g filter="url(#glow)" stroke="url(#st)" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<rect x="165" y="52" width="310" height="256" rx="18" fill="#ffffff" fill-opacity=".05"/><circle cx="235" cy="120" r="32" fill="#0d1736"/><circle cx="235" cy="110" r="10"/><path d="M215 140 q20 -18 40 0"/><line x1="290" y1="104" x2="430" y2="104" stroke-width="7"/><line x1="290" y1="128" x2="388" y2="128" stroke-width="4" stroke-opacity=".5"/><line x1="195" y1="190" x2="405" y2="190" stroke-width="4" stroke-opacity=".5"/><line x1="195" y1="216" x2="375" y2="216" stroke-width="4" stroke-opacity=".5"/><line x1="195" y1="242" x2="390" y2="242" stroke-width="4" stroke-opacity=".5"/><rect x="195" y="268" width="62" height="20" rx="10" fill="#8b6cf6" fill-opacity=".2"/><rect x="273" y="268" width="62" height="20" rx="10" fill="#8b6cf6" fill-opacity=".2"/><rect x="351" y="268" width="62" height="20" rx="10" fill="#8b6cf6" fill-opacity=".2"/>
+</g>
+</svg>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { friendlyError } from "../../friendlyError";
 import { listSolutions, request } from "../../features/solutions/api";
 
 const ROLES = [
@@ -33,7 +34,7 @@ export default function WaitlistForm({ source = "waitlist", detailed = false }) 
       const res = await request("/waitlist", { method: "POST", body: JSON.stringify({ email, source, website, role: role || undefined, interest: interest || undefined }) });
       setMsg(res.message);
     } catch (ex) {
-      setErr(ex.fieldErrors?.email ? "Please enter a valid email address." : ex.message);
+      setErr(ex.fieldErrors?.email ? "Please enter a valid email address." : friendlyError(ex).message);
     } finally { setBusy(false); }
   };
 
