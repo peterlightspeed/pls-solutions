@@ -6,4 +6,5 @@ import { lazy } from "react";
 
 export const TOOLS = {
   "invoice-generator": lazy(() => import("./invoice-generator/InvoiceGenerator")),
+  "scam-xray": lazy(() => import("./scam-xray/ScamXray")),
 };

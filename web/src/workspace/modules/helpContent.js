@@ -55,6 +55,21 @@ const MODULE_HELP = {
     ],
     nextActions: [{ label: "Explore other solutions", to: "/app/solutions" }, { label: "Request a solution", to: "/solutions/request" }],
   },
+  "scam-xray": {
+    whatItDoes: "Checks a website link and the wording of an offer for common warning signs, then helps you finish the official CAC and SEC checks. It gives a risk level with reasons, never a percentage or a verdict about a business.",
+    commonMistakes: [
+      "Treating \"No red flags found\" as a guarantee: registered businesses can still cheat people.",
+      "Treating \"not found\" as proof of fraud: try other spellings and the RC number first.",
+      "Pasting a link shortener: ask for the full address so the real site can be checked.",
+      "Skipping the CAC and SEC steps: those two records are the strongest evidence.",
+    ],
+    tips: [
+      "Paste the exact message or ad text: the wording check works best on the real words.",
+      "Open the official CAC and SEC pages from the buttons, search the company name, then come back and record what you found.",
+      "If anything is flagged, ask the business to explain it before you send money.",
+    ],
+    nextActions: [{ label: "Explore other solutions", to: "/app/solutions" }, { label: "Request a solution", to: "/solutions/request" }],
+  },
   "generic-tool": (item) => ({
     whatItDoes: `${item.shortDescription} This tool is not connected to the workspace yet, so it cannot be run.`,
     commonMistakes: ["Waiting for a result: nothing runs on this page yet."],

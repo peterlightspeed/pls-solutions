@@ -161,6 +161,7 @@ export const PARTNERS = [];
 
 // Everyday problems -> the library solution that addresses each. Slugs must match the seeded solutions.
 export const PROBLEMS = [
+  { icon: "shield", problem: "Not sure if a business or investment is real", text: "Check the website, the offer and the official registers before you send money.", slug: "scam-xray", solution: "Scam X-Ray" },
   { icon: "chat", problem: "Customers are waiting on replies", text: "Draft polite, consistent answers to customer messages in seconds.", slug: "whatsapp-reply-assistant", solution: "WhatsApp Reply Assistant" },
   { icon: "send", problem: "Leads go cold after the first chat", text: "Write follow-ups that nudge without being pushy.", slug: "follow-up-message-assistant", solution: "Follow-up Message Assistant" },
   { icon: "receipt", problem: "Invoices take too long to prepare", text: "Turn a few details into a clean, professional invoice.", slug: "invoice-generator", solution: "Invoice Generator" },

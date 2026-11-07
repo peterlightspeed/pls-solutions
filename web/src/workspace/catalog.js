@@ -54,7 +54,11 @@ function fromProduct(p) {
 // Tools that really run, entirely in the browser, with no backend call and no stored data.
 // They cannot be gated by the server, so they are shown as Free here. Keep the database row in sync
 // (backend/migrations/002_invoice_generator_free.sql) so there is one source of truth.
-const LOCAL_TOOLS = { "invoice-generator": { status: "beta", plan: "free" } };
+// `remote: true` = runs on our server but needs no account (public, rate-limited, nothing stored).
+const LOCAL_TOOLS = {
+  "invoice-generator": { status: "beta", plan: "free" },
+  "scam-xray": { status: "beta", plan: "free", remote: true },
+};
 
 export function normalizeApi(s) {
   const local = LOCAL_TOOLS[s.slug];
@@ -70,7 +74,8 @@ export function normalizeApi(s) {
     categoryLabel: s.category_label,
     plan: local ? local.plan : s.plan,
     status: local ? local.status : status,
-    localOnly: Boolean(local),
+    localOnly: Boolean(local) && !local.remote,
+    publicTool: Boolean(local && local.remote),
     img: `/img/solutions/${s.slug}.svg`,
     externalUrl: "",
     tags: s.tags || [],
@@ -107,6 +112,7 @@ export function searchItems(items, q) {
 
 export function accessText(item) {
   if (item.externalUrl) return "Opens PLS Jarvis on its own site. Sign-in rules are set there.";
+  if (item.publicTool) return "Free and open to everyone, no account needed. The address and text you enter are sent to our server to run the check. We do not save them.";
   if (item.localOnly) return "Free. Runs entirely in your browser: nothing you type is sent to our servers or saved.";
   if (item.source === "static") return "Not available to use yet.";
   const plan = item.plan === "pro" ? "Pro plan. Paid plans are not open yet." : "Free plan.";

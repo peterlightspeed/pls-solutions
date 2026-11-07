@@ -13,6 +13,23 @@ def f(name, label, type="text", required=True, **kw):
 
 STARTERS = [
     dict(
+        title="Scam X-Ray", slug="scam-xray", category="business",
+        description="Check a business or investment offer before you send money: website age, warning signs in the offer, and where to verify CAC and SEC registration.",
+        problem_solved="Fake investment pages and unregistered businesses look convincing, and most people don't know the free public checks that expose them.",
+        target_audience="Anyone about to pay or invest with a business they found online",
+        plan="free", status="available", is_featured=True, output_type="text",
+        output_description="A risk level with the exact warning signs found, plus the official CAC and SEC checks to finish. Not a verdict about any business.",
+        input_fields=[
+            f("website", "Website or link", required=False, placeholder="https://...", max_length=300),
+            f("offer_text", "What they promised (ad or message)", "textarea", required=False, max_length=4000),
+            f("cac_status", "What you found on CAC public search", "select", required=False,
+              options=["Not checked yet", "Found and active", "Found but not active", "Not found"]),
+            f("sec_status", "What you found on the SEC register", "select", required=False,
+              options=["Not checked yet", "Registered", "Not found", "Flagged by the SEC", "Not an investment business"]),
+        ],
+        tags=["scam", "fraud", "verify", "investment", "cac", "sec", "safety", "website age"],
+    ),
+    dict(
         title="CV Filling Assistant", slug="cv-filling-assistant", category="career",
         description="Turn your rough career notes into a clean, well-structured CV.",
         problem_solved="Writing a professional CV from scratch is slow, and many people don't know how to phrase their experience.",

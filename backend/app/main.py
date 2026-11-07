@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
+from app.checks.router import router as checks_router
 from app.contact import contact_router
 from app.contact import models as _contact_models  # noqa: F401
 from app.additive_migrate import add_missing_nullable_columns
@@ -60,6 +61,7 @@ app.add_middleware(
 app.include_router(solutions_router, prefix="/api")
 app.include_router(contact_router, prefix="/api")
 app.include_router(waitlist_router, prefix="/api")
+app.include_router(checks_router, prefix="/api")
 
 
 @app.on_event("startup")

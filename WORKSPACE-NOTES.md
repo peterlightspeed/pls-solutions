@@ -42,3 +42,12 @@ Run: backend `cd backend && DATABASE_URL=sqlite:///./dev.db python -m uvicorn ap
 
 ## The waitlist 500 / "CORS" error: root cause
 The browser's CORS message was a symptom. The backend crashed (new `role`/`interest` columns missing from the existing Neon table, so the INSERT failed), and a crash returns a 500 with no CORS headers, which browsers report as a CORS block. Fixes: startup adds missing nullable columns; a catch-all handler now returns a friendly JSON 500 that still carries CORS headers and logs the real exception; CORS stays an explicit allow-list (never `*`), with local dev ports allowed by default and `CORS_ORIGINS` / optional `CORS_ORIGIN_REGEX` for production.
+
+## Scam X-Ray (business and investment check)
+- Backend: `backend/app/checks/` (`domain.py` parses and validates the pasted link, `rdap.py` reads the domain registration date from RDAP, `assess.py` holds every rule, `router.py` is `POST /api/checks/business`). Public, rate limited (20 per hour per IP), stateless: nothing a visitor sends is stored or logged.
+- Frontend: `web/src/workspace/tools/scam-xray/`, registered in `tools/registry.js`, shown as Beta + Free (`remote: true` in `catalog.js` LOCAL_TOOLS: it calls our server but needs no account).
+- Database: the catalogue row is added by `seed.py` on the next backend start (insert-missing). No migration needed.
+- What is automatic: website age (RDAP), link red flags, warning phrases in pasted offer text. What is NOT automatic: CAC and SEC. There is no public API we know of, so the person opens the official search and records the result. TODO: a paid company-verification API (KYB) could fill CAC details automatically.
+- Deliberate: NO percentage and no "scam" verdict. There is no data to calibrate one and calling a real business a scam is a serious claim. Output is a risk level (high / caution / clear / incomplete) plus the exact warning signs with evidence.
+- Before going live: confirm the host start command passes `--proxy-headers --forwarded-allow-ips="*"` (otherwise every visitor shares one rate-limit bucket), and confirm the official CAC and SEC links in `ScamXray.jsx` (`OFFICIAL`).
+- Tests: `backend/tests/test_checks_logic.py` (pure logic), `backend/tests/test_checks_api.py` (endpoint).

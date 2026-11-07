@@ -34,6 +34,12 @@ const OVERRIDES = {
     stage: "testing",
     helpKey: "invoice-generator",
   },
+  "scam-xray": {
+    aiDomain: "checking businesses and investment offers for scam warning signs",
+    requiresAuth: false, // public, rate-limited, stores nothing
+    stage: "testing",
+    helpKey: "scam-xray",
+  },
   "pls-jarvis": {
     aiDomain: "development, debugging and automation",
     requiresAuth: null,
