@@ -1,14 +1,14 @@
 import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
-import { getAssistantProvider } from "./providers";
+import AssistantChat from "./AssistantChat";
+import { useAssistantStatus } from "./useAssistant";
 
-// Page help panel. Shows reviewed, built-in guidance for the current page.
-// It does NOT contain an AI conversation. The "conversation" area below is a reserved slot:
-// when a provider is registered (see providers.js) a chat component replaces the notice, and nothing else changes.
+// Page help panel: reviewed, built-in guidance for the current page, plus an assistant chat when the backend has
+// one configured (ANTHROPIC_API_KEY). With no key the chat simply does not appear and the panel says so.
 const AIHelpPanel = forwardRef(function AIHelpPanel({ context, onClose }, headingRef) {
   const { help } = context;
-  const provider = getAssistantProvider();
+  const available = useAssistantStatus(); // asks our backend whether an assistant is configured
   return (
     <aside className="ws-help" role="complementary" aria-labelledby="ws-help-h">
       <div className="ws-help__head">
@@ -41,12 +41,11 @@ const AIHelpPanel = forwardRef(function AIHelpPanel({ context, onClose }, headin
           <dt>Recent activity</dt><dd>{context.recentActivity.length ? context.recentActivity.map((a) => a.event).join(", ") : "None"}</dd>
           <dt>Topic</dt><dd>{context.descriptor ? context.descriptor.aiDomain : "the workspace"}</dd>
         </dl>
-        <p className="ws-muted">Only labels and counts like these, never what you type or upload.</p>
+        <p className="ws-muted">Only labels and counts like these are shared automatically. What you type in the chat is sent to the assistant, with secrets hidden first.</p>
       </details>
 
-      {provider ? (
-        <div data-slot="conversation" /> /* TODO(workspace-intelligence): render the chat component here */
-      ) : (
+      {available === true && <AssistantChat context={context} />}
+      {available === false && (
         <p className="ws-notice">A conversational assistant is not connected yet. This panel shows built-in guidance only.</p>
       )}
     </aside>

@@ -2,13 +2,15 @@
 
 DEV/SINGLE-PROCESS ONLY: state is per-process and lost on restart, so it does
 not protect a multi-worker deployment. TODO: replace with Redis-backed limiting
-(the architecture already calls for Redis). Also TODO: behind a reverse proxy,
-client.host is the proxy's IP; configure trusted proxy headers properly.
+(the architecture already calls for Redis). Behind a proxy set TRUST_PROXY=1
+so each visitor gets their own limit (see app/clientip.py).
 """
 import time
 from collections import defaultdict, deque
 
 from fastapi import HTTPException, Request
+
+from app.clientip import client_ip
 
 
 class InMemoryRateLimiter:
@@ -21,7 +23,7 @@ class InMemoryRateLimiter:
         self._hits.clear()
 
     def __call__(self, request: Request) -> None:
-        key = request.client.host if request.client else "unknown"
+        key = client_ip(request)  # real visitor IP behind a proxy when TRUST_PROXY=1 (see app/clientip.py)
         now = time.monotonic()
         hits = self._hits[key]
         while hits and now - hits[0] > self.window:

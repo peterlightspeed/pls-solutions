@@ -17,6 +17,7 @@ import { getHelp } from "../modules/helpContent";
 // @property {{label:string,to?:string}[]} availableActions
 // @property {{label:string,to:string}[]} documentation
 // @property {{event:string,at:number}[]} recentActivity   event names only
+// @property {{kind:string,status?:number,code?:string,title?:string}[]} errors   errors visible on this page (no raw messages)
 // @property {Object} help                   built-in guidance for this page
 //
 // TODO(workspace-intelligence): the BACKEND must rebuild permissions itself from the session. It must treat
@@ -63,6 +64,7 @@ export function buildContext({ pathname, items, snapshot, principal, can }) {
     availableActions: [...(mod.availableActions || []), ...help.nextActions],
     documentation: help.docs,
     recentActivity: item ? snapshot.activity[item.slug] || [] : [],
+    errors: Object.entries(snapshot.published).filter(([k]) => k.startsWith("error:")).flatMap(([, v]) => v.errors || []).slice(0, 5),
     help,
   };
 }

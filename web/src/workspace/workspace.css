@@ -124,3 +124,19 @@
 .ws-errorstate{margin:14px 0}
 @media (min-width:1200px){.ws--help .ws-main{margin-right:380px}}
 @media (max-width:900px){.ws-top__help span{display:none}.ws-help-wrap{top:60px}}
+
+/* ---- assistant chat ---- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ws-chat{margin-top:1.4em;padding-top:1em;border-top:1px solid var(--line)}
+.ws-chat h3{margin-top:0}
+.ws-chat__note{font-size:.85rem}
+.ws-chat__log{display:flex;flex-direction:column;gap:10px;max-height:46vh;overflow-y:auto;margin:10px 0;padding-right:4px}
+.ws-chat__msg{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+.ws-chat__msg--user{background:rgba(47,212,232,.1)}
+.ws-chat__who{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.ws-chat__p{margin:.3em 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.ws-code{margin:.5em 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ws-code .ws-link{float:right;min-height:32px}
+.ws-code pre{margin:0;padding:10px 12px;overflow-x:auto;background:rgba(0,0,0,.25);font-size:.85rem}
+:root[data-theme="light"] .ws-code pre{background:rgba(15,23,42,.06)}
+.ws-chat__form textarea{max-width:none;padding:10px 12px;resize:vertical}

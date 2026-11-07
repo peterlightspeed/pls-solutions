@@ -51,3 +51,19 @@ The browser's CORS message was a symptom. The backend crashed (new `role`/`inter
 - Deliberate: NO percentage and no "scam" verdict. There is no data to calibrate one and calling a real business a scam is a serious claim. Output is a risk level (high / caution / clear / incomplete) plus the exact warning signs with evidence.
 - Before going live: confirm the host start command passes `--proxy-headers --forwarded-allow-ips="*"` (otherwise every visitor shares one rate-limit bucket), and confirm the official CAC and SEC links in `ScamXray.jsx` (`OFFICIAL`).
 - Tests: `backend/tests/test_checks_logic.py` (pure logic), `backend/tests/test_checks_api.py` (endpoint).
+
+## AI assistant (live when ANTHROPIC_API_KEY is set)
+- Backend: `backend/app/assist/` (`POST /api/assist`, `GET /api/assist/status`). The key stays on the server. Secrets are redacted from messages before they leave the server; context fields are allow-listed and length-capped; per-visitor hourly limits plus a daily cap; provider failures return safe messages; audit events record counts only, never message text.
+- Frontend: the Page help panel shows a chat only when the backend reports the assistant is on. With no key the chat is hidden and the panel says so.
+- Add another AI provider: one class in `assist/providers.py` and one line in `build_provider`.
+- Limits are in memory (single process). Use Redis before running several workers.
+
+## Environment variables
+Render (backend):
+- `DATABASE_URL`: Neon connection string (already set).
+- `CORS_ORIGINS`: `https://pls-solutions-pi.vercel.app` (comma-separate more, add your custom domain later).
+- `TRUST_PROXY`: `1` (so rate limits are per visitor, not shared by everyone behind Render's proxy).
+- `ANTHROPIC_API_KEY`: turns the assistant on. Leave unset to keep it off.
+- Optional: `ASSIST_MODEL` (default `claude-haiku-5-5`), `ASSIST_MAX_TOKENS` (700), `ASSIST_GUEST_LIMIT_PER_HOUR` (10), `ASSIST_MEMBER_LIMIT_PER_HOUR` (40), `ASSIST_DAILY_CAP` (300), `CORS_ORIGIN_REGEX` (Vercel previews), `RDAP_BASE` (Scam X-Ray lookup).
+Vercel (frontend):
+- `VITE_API_URL`: `https://pls-tech-api.onrender.com/api`.

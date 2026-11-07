@@ -13,8 +13,8 @@
 // @property {() => boolean} isAvailable
 // @property {(request:AssistantRequest, signal?:AbortSignal) => Promise<AssistantResponse>} send
 //
-// TODO(workspace-intelligence): add POST /api/assist on the backend (auth + rate limit + redaction + per-plan
-// limits), then register a thin provider here that forwards `toAssistantRequest(...)` to it.
+// IMPLEMENTED: the backend endpoint POST /api/assist (backend/app/assist/) does auth/limits/redaction and picks the
+// model; assistantApi.js is the browser side. The registry below remains for alternative front-end providers.
 const providers = new Map();
 let activeId = null;
 
@@ -28,7 +28,7 @@ export function getAssistantProvider() {
 }
 
 // Only these fields may ever leave the browser for an assistant. Keeps content and secrets out by construction.
-const ALLOWED = ["module", "page", "route", "action", "selection", "availableActions", "recentActivity"];
+const ALLOWED = ["module", "page", "route", "action", "selection", "availableActions", "recentActivity", "errors"];
 
 export function toAssistantRequest(context, messages) {
   const safe = Object.fromEntries(ALLOWED.map((k) => [k, context[k]]));

@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
+from app.assist.router import router as assist_router
 from app.checks.router import router as checks_router
 from app.contact import contact_router
 from app.contact import models as _contact_models  # noqa: F401
@@ -62,6 +63,7 @@ app.include_router(solutions_router, prefix="/api")
 app.include_router(contact_router, prefix="/api")
 app.include_router(waitlist_router, prefix="/api")
 app.include_router(checks_router, prefix="/api")
+app.include_router(assist_router, prefix="/api")
 
 
 @app.on_event("startup")
